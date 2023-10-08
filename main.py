@@ -16,21 +16,6 @@ def input_error(func):
             return "IndexError. Give me name and phone please"
     return inner
 
-class Iterable:
-    #MAX_VALUE = 4
-    def __init__(self):
-        self.current_value = 0
-
-    def __next__(self):
-        if self.current_value < MAX_VALUE:
-            self.current_value += 1
-            return self.current_value
-        raise StopIteration
- 
-class CustomIterator():
-    def __iter__(self):
-        return Iterable()
-       
 class Field: 
     def __init__(self, value):
         self.value = value
@@ -153,7 +138,15 @@ class Record():
    
         
 class AddressBook(UserDict):
-    
+    def show_all(self):
+        MAX_VALUE = 4
+        count = 1
+        for record in self.data.values():
+            while count <= MAX_VALUE:
+                print(record)
+            yield 'next...'
+        return 'end'
+        
     def add_record(self, record: Record):
         self.data[record.name.value] = record
     
@@ -225,7 +218,7 @@ def main():
     jane_record6 = Record("Jane6")
     jane_record6.add_phone("9876543210")
     book.add_record(jane_record6)
-    book.iterator()
+    book.show_all()
 
     
 if __name__ == '__main__':
